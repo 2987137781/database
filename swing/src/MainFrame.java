@@ -1,16 +1,21 @@
 // 编写一个Java程序，该程序能够创建一个主窗口，并在该窗口中创建一个菜单栏。
 //菜单栏中包含三个菜单项：出库、入库和库存查询。
 //导入所需的库和自定义的类
-import view.in_store;
-import view.out_store;
+import utils.Utils;
+import view.*;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
+    private JPanel mainPanel;
     public MainFrame(){
+        Connection connection = Utils.getConnection();
         //主窗口属性
         setTitle("商品库存管理系统");
         setSize(600,500);
@@ -33,10 +38,18 @@ public class MainFrame extends JFrame {
         menu2.add(menuItem3);
         menuBar.add(menu2);
 
-        JMenu menu3 = new JMenu("系统管理");
-        JMenuItem menuItem4 = new JMenuItem("修改密码");
+        JMenu menu3 = new JMenu("人员管理");
+        JMenuItem menuItem4 = new JMenuItem("显示员工信息");
+        JMenuItem menuItem5 = new JMenuItem("管理员工");
+
         menu3.add(menuItem4);
+        menu3.add(menuItem5);
         menuBar.add(menu3);
+
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new CardLayout());
+        add(mainPanel);
+        JPanel employeeManagementPanel = new EmployeeDisplayPanel();
 
         // 为“出库”菜单项添加事件监听器
         menuItem1.addActionListener(new ActionListener() {
@@ -53,10 +66,59 @@ public class MainFrame extends JFrame {
                 new in_store().setVisible(true);
             }
         });
+        // 为“库存查询”菜单项添加事件监听器
+        menuItem3.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 处理库存查询菜单项的点击事件
+                new show_store().setVisible(true);
+            }
+        });
+        // 为“显示员工信息”菜单项添加事件监听器
+        menuItem4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 处理人员管理菜单项的点击事件
+                mainPanel.add(employeeManagementPanel, "employeeManagement");
+                switchPanel("employeeManagement");
+            }
+        });
+
+        // 为“管理员工”菜单项添加事件监听器
+        menuItem5.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 处理人员管理菜单项的点击事件
+                new managerment_employee().setVisible(true);
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+
+                // 关闭数据库连接
+
+            }
+        });
+    }
+    private void switchPanel(String panelName) {
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, panelName);
     }
     //测试用，接入时请注释掉
     public static void main(String []args){
-        new MainFrame().setVisible(true);
+        Connection connection = Utils.getConnection();
+
+        if (connection != null) {
+            // Perform operations
+            new MainFrame().setVisible(true);
+            // Close the database connection
+
+        } else {
+            System.out.println("Failed to connect to the database.");
+        }
     }
 }
