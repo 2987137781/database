@@ -10,9 +10,9 @@ public class managerment_employee extends JFrame {
     public managerment_employee(){
         EmployeeService employeeService = new EmployeeService();
         setTitle("员工管理");
-        setSize(500,440);
+        setSize(500,500);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(6,1,10,10));
+        setLayout(new GridLayout(7,1,10,10));
 
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel();
@@ -20,6 +20,7 @@ public class managerment_employee extends JFrame {
         JPanel p4 = new JPanel();
         JPanel p5 = new JPanel();
         JPanel p6 = new JPanel();
+        JPanel p7 = new JPanel();
 
         JButton add_btn = new JButton("添加员工");
         JButton delete_btn = new JButton("删除员工");
@@ -27,10 +28,13 @@ public class managerment_employee extends JFrame {
         JLabel employee_id = new JLabel("员工号");
         JLabel employee_name = new JLabel("员工名");
         JLabel phone_number = new JLabel("电话");
+        JLabel authority = new JLabel("职称");
+
 
         JTextField f1 = new JTextField(20);
         JTextField f2 = new JTextField(20);
         JTextField f3 = new JTextField(20);
+        JTextField f4 = new JTextField(20);
 
         p1.add(title);
         p2.add(employee_id);
@@ -39,8 +43,10 @@ public class managerment_employee extends JFrame {
         p3.add(f2);
         p4.add(phone_number);
         p4.add(f3);
-        p5.add(add_btn);
-        p6.add(delete_btn);
+        p5.add(authority);
+        p5.add(f4);
+        p6.add(add_btn);
+        p7.add(delete_btn);
 
         add(p1);
         add(p2);
@@ -48,6 +54,7 @@ public class managerment_employee extends JFrame {
         add(p4);
         add(p5);
         add(p6);
+        add(p7);
 
         add_btn.addActionListener(new ActionListener() {
             @Override
@@ -56,12 +63,12 @@ public class managerment_employee extends JFrame {
                     String id = f1.getText();
                     String name = f2.getText();
                     String phoneNumber = f3.getText();
-
+                    int authority = Integer.parseInt(f4.getText());
                     Employee employee = new Employee();
                     employee.setId(id);
                     employee.setName(name);
                     employee.setPhone_number(phoneNumber);
-                    employee.setAuthority(0);
+                    employee.setAuthority(authority);
                     int result = employeeService.employee_insert(employee);
                     if (result > 0) {
                         JOptionPane.showMessageDialog(null, "添加成功！", "信息", JOptionPane.INFORMATION_MESSAGE);
@@ -94,9 +101,5 @@ public class managerment_employee extends JFrame {
         });
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }
-
-    public static void main(String[] args) {
-        new managerment_employee();
     }
 }

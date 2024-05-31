@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     private JPanel mainPanel;
+    private EmployeeDisplayPanel employeeDisplayPanel;
     public MainFrame(){
         Connection connection = Utils.getConnection();
         //主窗口属性
@@ -49,7 +50,9 @@ public class MainFrame extends JFrame {
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
         add(mainPanel);
-        JPanel employeeManagementPanel = new EmployeeDisplayPanel();
+
+        employeeDisplayPanel = new EmployeeDisplayPanel();
+
 
         // 为“出库”菜单项添加事件监听器
         menuItem1.addActionListener(new ActionListener() {
@@ -80,7 +83,8 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 处理人员管理菜单项的点击事件
-                mainPanel.add(employeeManagementPanel, "employeeManagement");
+                mainPanel.add(employeeDisplayPanel, "employeeDisplayPanel");
+                employeeDisplayPanel.refreshEmployeeData();
                 switchPanel("employeeManagement");
             }
         });
@@ -98,9 +102,8 @@ public class MainFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-
                 // 关闭数据库连接
-
+                Utils.closeConnection(connection);
             }
         });
     }

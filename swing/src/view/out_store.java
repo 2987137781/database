@@ -59,9 +59,5 @@ public class out_store extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-    //测试用，接入时请注释掉
-    public static void main(String []args){
-        new out_store();
-    }
 
 }

@@ -123,8 +123,6 @@ public class show_store extends JFrame {
         this.setLayout(null);
     }
 
-    //测试用
-    public static void main(String []args){ new show_store();}
 }
 
 

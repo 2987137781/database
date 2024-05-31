@@ -41,5 +41,14 @@ public class Utils  {
                 System.out.println("关闭数据连接失败");
             }
         }
+    public static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
