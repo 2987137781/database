@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-
+//废弃
 public class Login extends JFrame {
     private JPanel LoginPanel;
 
@@ -89,7 +89,5 @@ public class Login extends JFrame {
         LoginPanel.add(btnLogin);
     }
     //测试用的
-    public static void main(String[] args) {
-        new Login();
-    }
+
 }

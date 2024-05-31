@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 /**
  * 数据库连接类
+ * 没用了和utils重复了
  */
 public class DatabaseConnection {
 
@@ -44,6 +45,7 @@ public class DatabaseConnection {
         }
     }
     //测试连接结果
+    /*
     public static void main(String[] args) {
         // SQL query to select all from employee table
         String query = "SELECT * FROM employee";
@@ -61,5 +63,5 @@ public class DatabaseConnection {
         } finally {
             closeConnection();
         }
-    }
+    }*/
 }
