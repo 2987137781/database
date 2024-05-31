@@ -119,7 +119,7 @@ public class out_store extends JFrame {
                         outboundService.outbound_insert(outbound);
                         //出库操作
                         stock.setNum(stock.getNum()-out_num);
-                        stockService.stock_update_num(stock);
+                        stockService.stock_updateaut(stock);
                         JOptionPane.showMessageDialog(null,"出库成功！","出库",JOptionPane.DEFAULT_OPTION);
                     }
 
