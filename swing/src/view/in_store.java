@@ -125,7 +125,7 @@ public class in_store extends JFrame {
                         inbound.setTrade_time(timestamp);
                         inboundService.inbound_insert(inbound);
                         stock.setNum(stock.getNum()+in_num);
-                        stockService.stock_update_num(stock);
+                        stockService.stock_updateaut(stock);
                         JOptionPane.showMessageDialog(null,"入库成功！","入库",JOptionPane.DEFAULT_OPTION);
                     }
 
