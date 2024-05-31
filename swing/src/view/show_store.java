@@ -1,11 +1,16 @@
 package view;
 
+import pojo.Stock;
+import service.StockService;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.List;
 
 //购物车
 public class show_store extends JFrame {
@@ -54,10 +59,10 @@ public class show_store extends JFrame {
         table.setEnabled(false);    //表中数据不可更改
 
         //测试用
-        for(int i=1;i<10;i++){
-            String s[] = {"a"+i,"b"+i,"100"};
-            model.addRow(s);
-        }
+//        for(int i=1;i<10;i++){
+//            String s[] = {"a"+i,"b"+i,"100"};
+//            model.addRow(s);
+//        }
 
         // 使用JScrollPane包装表格以自动处理滚动条
         JScrollPane scrollPane = new JScrollPane(table);
@@ -71,31 +76,53 @@ public class show_store extends JFrame {
         this.getContentPane().add(searchButton);
         //添加监听
         //.....
-//        searchButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                  //  UsersFun.allcart(searchText.getText(), model);
-//                } catch (Exception ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    StockService stockService = new StockService();
+                    String s1 = searchText.getText();
+                    Stock stock= stockService.stock_queryid(s1);
+                    if(stock.getId() == null){
+                        JOptionPane.showMessageDialog(null,"商品编号不存在！请重新输入！！","库存",JOptionPane.ERROR_MESSAGE);
+
+                    }
+                    else{
+                        String s[] = {stock.getId(),stock.getName(),String.valueOf(stock.getNum())};
+                        model.addRow(s);
+                    }
+
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         JButton searchButton2=new JButton();
         searchButton2.setBounds(330,10,110,30);
         searchButton2.setText("查询全部");
         this.getContentPane().add(searchButton2);
-//        searchButton2.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                  //  UsersFun.allcart(username,model);
-//                } catch (Exception ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        });
+        searchButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    //清除已查询的结果
+                    while(model.getRowCount()!=0){
+                        model.removeRow(model.getRowCount()-1);
+                    }
+
+                    StockService stockService = new StockService();
+                    List<Stock> list = stockService.queryall();
+                    for(int i=0;i<list.size();i++){
+                        System.out.println(list.get(i));
+                        String s[] = {list.get(i).getId(),list.get(i).getName(),String.valueOf(list.get(i).getNum())};
+                        model.addRow(s);
+                    }
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         //添加返回主界面按钮
         JButton ReturnButton=new JButton();
