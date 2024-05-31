@@ -89,5 +89,4 @@ public class Login extends JFrame {
         LoginPanel.add(btnLogin);
     }
     //测试用的
-
 }
