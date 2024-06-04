@@ -101,25 +101,33 @@ public class in_store extends JFrame {
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String s = time_f.getText();
-                Date date;
+                Date date ;
                 try {
                     InboundService inboundService = new InboundService();
                     StockService stockService = new StockService();
 
                     Stock stock = stockService.stock_queryid(s1);
-
+                    if(!s.equals("(默认当前时间)")){
+                        date = simpleDateFormat.parse(s);
+                    }
+                    else{
+                        date = new Date();
+                    }
                     if(stock.getId() == null){
-//
-                        JOptionPane.showMessageDialog(null,"商品编号不存在！入库失败！！","入库",JOptionPane.ERROR_MESSAGE);
+                        stock.setId(id_f.getText());
+                        stock.setName(JOptionPane.showInputDialog("输入新商品的名称"));
+                        stock.setNum(in_num);
+                        stockService.stock_insert(stock);
+                        Timestamp timestamp=new Timestamp(date.getTime());
+                        inbound.setTrade_time(timestamp);
+                        inboundService.inbound_insert(inbound);
+                        JOptionPane.showMessageDialog(null,"入库成功！","入库",JOptionPane.DEFAULT_OPTION);
+
+                        //JOptionPane.showMessageDialog(null,"商品编号不存在！入库失败！！","入库",JOptionPane.ERROR_MESSAGE);
 
                     }
                     else {
-                        if(!s.equals("(默认当前时间)")){
-                            date = simpleDateFormat.parse(s);
-                        }
-                        else{
-                            date = new Date();
-                        }
+
 
                         Timestamp timestamp=new Timestamp(date.getTime());
                         inbound.setTrade_time(timestamp);

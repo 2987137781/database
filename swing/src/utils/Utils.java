@@ -4,9 +4,12 @@ import java.sql.*;
 
 public class Utils  {
     public static final String DRIVER="com.mysql.cj.jdbc.Driver";
+
     public static final String url="jdbc:mysql://localhost:3306/goods";
     public static final String username="root";
-    public static final String password="123456";
+    public static final String password="yyj123";
+
+
         static{
             try{
                 Class.forName(DRIVER);

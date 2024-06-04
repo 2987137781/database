@@ -10,7 +10,7 @@ import java.util.List;
 public class StockService {
     public int stock_insert(Stock stock)throws Exception{
         Connection connection= Utils.getConnection();
-        String sql="insert into goods(id,name,num) values(?,?,?)";
+        String sql="insert into stock(id,name,num) values(?,?,?)";
         PreparedStatement preparedStatement= connection.prepareStatement(sql);
         preparedStatement.setString(1,stock.getId());
         preparedStatement.setString(2,stock.getName());
@@ -69,4 +69,5 @@ public class StockService {
         Utils.Close(preparedStatement,connection);
         return  array;
     }
+
 }

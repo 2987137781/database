@@ -47,6 +47,13 @@ public class MainFrame extends JFrame {
         menu3.add(menuItem5);
         menuBar.add(menu3);
 
+        JMenu menu4 = new JMenu("记录查询");
+        JMenuItem menuItem6 = new JMenuItem("入库记录查询");
+        JMenuItem menuItem7 = new JMenuItem("出库记录查询");
+        menu4.add(menuItem6);
+        menu4.add(menuItem7);
+        menuBar.add(menu4);
+
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
         add(mainPanel);
@@ -99,6 +106,25 @@ public class MainFrame extends JFrame {
             }
         });
 
+        // 为“入库记录查询”菜单项添加事件监听器
+        menuItem6.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 处理入库记录查询菜单项的点击事件
+                new in_store_record().setVisible(true);
+            }
+        });
+
+        // 为“出库记录查询”菜单项添加事件监听器
+        menuItem7.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e){
+                // 处理出库记录查询菜单项的点击事件
+                new out_store_record().setVisible(true);
+            }
+        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
