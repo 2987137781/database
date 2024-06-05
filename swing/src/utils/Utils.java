@@ -51,4 +51,21 @@ public class Utils  {
         }
     }
 
+    public static void close(PreparedStatement preparedStatement, Connection connection) {
+
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
