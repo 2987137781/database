@@ -27,7 +27,7 @@ public class EmployeeFrame extends JFrame{
 
         // 创建菜单项
         JMenu menu1 = new JMenu("仓库管理");
-        JMenuItem menuItem1 = new JMenuItem("出库");
+        JMenuItem menuItem1 = new JMenuItem("出库请求");
         JMenuItem menuItem2 = new JMenuItem("入库");
         menu1.add(menuItem1);
         menu1.add(menuItem2);
@@ -58,7 +58,7 @@ public class EmployeeFrame extends JFrame{
         menuItem1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new out_store().setVisible(true);
+                new OutstoreRequestFrame().setVisible(true);
             }
         });
 
@@ -108,5 +108,18 @@ public class EmployeeFrame extends JFrame{
     private void switchPanel(String panelName) {
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
         cardLayout.show(mainPanel, panelName);
+    }
+
+    public static void main(String[] args) {
+        Connection connection = Utils.getConnection();
+
+        if (connection != null) {
+            // Perform operations
+            new EmployeeFrame().setVisible(true);
+            // Close the database connection
+
+        } else {
+            System.out.println("Failed to connect to the database.");
+        }
     }
 }

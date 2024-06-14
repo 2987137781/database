@@ -2,6 +2,7 @@
 //导入所需的库和自定义的类
 import utils.Utils;
 import view.*;
+import service.OutstoreRequestService;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,23 +15,27 @@ import java.awt.event.ActionListener;
 public class MainFrame extends JFrame {
     private JPanel mainPanel;
     private EmployeeDisplayPanel employeeDisplayPanel;
-    public MainFrame(){
+    private JButton approveRequestButton;
+    private JTable requestTable;
+    public MainFrame() {
         Connection connection = Utils.getConnection();
         //主窗口属性
         setTitle("商品库存管理系统");
-        setSize(600,500);
+        setSize(600, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //创建菜单
-        JMenuBar menuBar =new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
         // 创建菜单项
         JMenu menu1 = new JMenu("仓库管理");
         JMenuItem menuItem1 = new JMenuItem("出库");
         JMenuItem menuItem2 = new JMenuItem("入库");
+        JMenuItem menuItem8 = new JMenuItem("处理请求");
         menu1.add(menuItem1);
         menu1.add(menuItem2);
+        menu1.add(menuItem8);
         menuBar.add(menu1);
 
         JMenu menu2 = new JMenu("库存管理");
@@ -54,12 +59,12 @@ public class MainFrame extends JFrame {
         menu4.add(menuItem7);
         menuBar.add(menu4);
 
+        //显示员工的组件
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
         add(mainPanel);
 
         employeeDisplayPanel = new EmployeeDisplayPanel();
-
 
         // 为“出库”菜单项添加事件监听器
         menuItem1.addActionListener(new ActionListener() {
@@ -130,6 +135,15 @@ public class MainFrame extends JFrame {
                 Utils.closeConnection(connection);
             }
         });
+
+        //请求
+        menuItem8.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 处理人员管理菜单项的点击事件
+                new managerment_requset().setVisible(true);
+            }
+         });
     }
     private void switchPanel(String panelName) {
         CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
